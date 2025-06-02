@@ -1,0 +1,73 @@
+# Advanced Heatmap Card Example
+# This example demonstrates all available features
+
+type: custom:heatmap-card
+background: /local/heatmap-card/house_floorplan.svg
+width: 800
+height: 600
+radius: 50
+blur: 15
+opacity: 0.7
+auto_scale: true
+scale_margin: 10
+update_interval: 15
+show_legend: true
+legend_unit: "°C"
+show_labels: true
+error_message: "Unable to load sensor data"
+
+# Custom gradient from cold (blue) to hot (red)
+gradient:
+  0.0: "#0000ff"    # Blue - Cold
+  0.25: "#00ffff"   # Cyan
+  0.5: "#00ff00"    # Green - Moderate
+  0.75: "#ffff00"   # Yellow
+  1.0: "#ff0000"    # Red - Hot
+
+points:
+  # Living areas with temperature sensors
+  - x: 150
+    y: 200
+    entity_id: sensor.living_room_temp
+    label: "Living Room"
+    weight: 1.2
+  
+  - x: 450
+    y: 200
+    entity_id: sensor.kitchen_temp
+    label: "Kitchen"
+  
+  - x: 650
+    y: 200
+    entity_id: sensor.dining_room_temp
+    label: "Dining"
+  
+  # Bedrooms
+  - x: 150
+    y: 400
+    entity_id: sensor.master_bedroom_temp
+    label: "Master Bed"
+  
+  - x: 450
+    y: 400
+    entity_id: sensor.kids_room_temp
+    label: "Kids Room"
+  
+  # Bathrooms (using static values as examples)
+  - x: 650
+    y: 400
+    value: 23.5
+    label: "Guest Bath"
+    weight: 0.8
+  
+  # Utility areas
+  - x: 300
+    y: 100
+    entity_id: sensor.attic_temp
+    label: "Attic"
+  
+  - x: 300
+    y: 500
+    entity_id: sensor.garage_temp
+    label: "Garage"
+    weight: 0.6 

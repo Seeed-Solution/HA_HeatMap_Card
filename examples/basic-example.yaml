@@ -1,0 +1,22 @@
+# Basic Heatmap Card Example
+# This example shows a simple temperature monitoring setup
+
+type: custom:heatmap-card
+background: /local/heatmap-card/house_floorplan.svg
+points:
+  - x: 120
+    y: 100
+    entity_id: sensor.living_room_temperature
+    label: "Living Room"
+  - x: 320
+    y: 100
+    entity_id: sensor.kitchen_temperature
+    label: "Kitchen"
+  - x: 120
+    y: 250
+    entity_id: sensor.bedroom_temperature
+    label: "Bedroom"
+  - x: 320
+    y: 250
+    entity_id: sensor.bathroom_temperature
+    label: "Bathroom" 
