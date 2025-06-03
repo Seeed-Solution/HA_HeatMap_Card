@@ -10,7 +10,8 @@ export default {
   output: {
     file: 'dist/heatmap-card.js',
     format: 'es',
-    sourcemap: !production
+    sourcemap: !production,
+    inlineDynamicImports: true
   },
   plugins: [
     resolve({

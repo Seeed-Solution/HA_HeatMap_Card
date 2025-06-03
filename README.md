@@ -6,7 +6,7 @@ A custom Lovelace card for Home Assistant that displays beautiful heatmaps overl
 [![License][license-shield]](LICENSE)
 [![hacs][hacsbadge]][hacs]
 
-![Heatmap Card Example](docs/images/example.png)
+![Heatmap Card Example](docs/img/result_visualize.png)
 
 ## ✨ Features
 
@@ -25,24 +25,43 @@ A custom Lovelace card for Home Assistant that displays beautiful heatmaps overl
 
 ### HACS (Recommended)
 
-1. Open HACS in your Home Assistant instance
-2. Click on "Frontend" section
-3. Click the "+" button
-4. Search for "Heatmap Card"
-5. Click "Install"
-6. Restart Home Assistant
+Since this card is not yet in the HACS default repository, you'll need to add it as a custom repository:
+
+1. Open HACS in your Home Assistant instance.
+2. Go to "Frontend".
+3. Click the three dots in the top right corner and select "Custom repositories".
+4. In the dialog, paste the URL to this GitHub repository: `https://github.com/Seeed-Solution/lovelace-heatmap-card`
+5. Select "Dashboard" as the category.
+6. Click "ADD".
+7. The card should now appear in the HACS Frontend section. Click on it.
+8. Click "INSTALL THIS REPOSITORY IN HACS".
+9. Click "INSTALL".
+10. Restart Home Assistant if prompted or if the card doesn't load immediately.
 
 ### Manual Installation
 
-1. Download `heatmap-card.js` from the [latest release][releases]
-2. Copy it to `/config/www/heatmap-card.js`
-3. Add the resource in your Lovelace configuration:
+1. Download `heatmap-card.js` from the [latest release][releases].
+2. Copy the downloaded `heatmap-card.js` file into your Home Assistant `config/www/` directory. (If the `www` directory doesn't exist, create it.)
+3. Add the card as a resource in your Lovelace configuration. This tells Home Assistant where to find the card's code.
+   To do this via the UI (recommended for most users):
+    a. Go to Settings > Dashboards.
+    b. Select the dashboard you want to add the card to (or create a new one).
+    c. Click the three dots (⋮) in the top right and choose "Edit dashboard".
+    d. Click the three dots (⋮) again and choose "Manage resources".
+    e. Click the "+ ADD RESOURCE" button (usually in the bottom right).
+    f. Enter the following:
+        - URL: `/local/heatmap-card.js`
+        - Resource type: `JavaScript Module`
+    g. Click "CREATE".
 
-```yaml
-resources:
-  - url: /local/heatmap-card.js
-    type: module
-```
+   Alternatively, if you manage your Lovelace configuration in YAML mode, add the following to the `resources` section of your `ui-lovelace.yaml` or dashboard YAML file:
+
+   ```yaml
+   resources:
+     - url: /local/heatmap-card.js
+       type: module
+   ```
+4. Refresh Home Assistant: You might need to refresh your browser or restart Home Assistant for the new resource to be loaded correctly.
 
 ## 🚀 Quick Start
 
@@ -121,99 +140,65 @@ Each point in the `points` array supports:
 
 ## 📊 Examples
 
-### Temperature Monitoring with Auto-scaling
+
+### Office People Flow Example
+
+This example demonstrates a more complex layout for an office, showing potential people flow or occupancy.
+
+![Office People Flow Example](docs/assets/office_flow_example.png)
 
 ```yaml
 type: custom:heatmap-card
-background: /local/house_floorplan.svg
+background: /local/images/firewood_fp.jpg # User needs to place firewood_fp.jpg in config/www/images/
+points:
+  - x: 220
+    y: 100
+    entity_id: sensor.your_temperature_sensor # Replace with your actual sensor
+    label: Communication
+  - x: 300
+    y: 250
+    value: 8
+    label: Meeting
+    weight: 0.8
+  - x: 300
+    y: 180
+    value: 15
+    label: Office
+    weight: 0.8
+  - x: 120
+    y: 140
+    value: 5
+    label: WorkingArea1
+    weight: 0.8
+  - x: 120
+    y: 230
+    value: 8
+    label: WorkingArea2
+    weight: 0.8
+  - x: 220
+    y: 160
+    value: 15
+    label: Exhibition
+    weight: 0.8
+  - x: 220
+    y: 260
+    value: 20
+    label: Entrance
+    weight: 0.8
+radius: 40
+blur: 30
+opacity: 0.7
 auto_scale: true
 scale_margin: 10
+update_interval: 30 # In seconds
 show_legend: true
-legend_unit: "°C"
-update_interval: 60
-gradient:
-  0.0: "#0000ff"  # Cold - Blue
-  0.5: "#00ff00"  # Moderate - Green
-  1.0: "#ff0000"  # Hot - Red
-points:
-  - x: 150
-    y: 200
-    entity_id: sensor.living_room_temp
-    label: "Living Room"
-  - x: 450
-    y: 200
-    entity_id: sensor.kitchen_temp
-    label: "Kitchen"
-  - x: 150
-    y: 400
-    entity_id: sensor.bedroom_temp
-    label: "Bedroom"
-  - x: 450
-    y: 400
-    entity_id: sensor.bathroom_temp
-    label: "Bathroom"
-```
-
-### Energy Usage Visualization
-
-```yaml
-type: custom:heatmap-card
-background: /local/office_layout.png
-radius: 60
-blur: 20
-opacity: 0.7
+legend_unit: ""
 show_labels: true
-min_value: 0
-max_value: 1000
-legend_unit: "W"
+error_message: Error loading heatmap data.
 gradient:
-  0.0: "#00ff00"  # Low usage - Green
-  0.3: "#ffff00"  # Medium - Yellow
-  0.6: "#ff8800"  # High - Orange
-  1.0: "#ff0000"  # Very high - Red
-points:
-  - x: 100
-    y: 150
-    entity_id: sensor.desk_power
-    label: "Desk"
-  - x: 300
-    y: 150
-    entity_id: sensor.server_power
-    label: "Server"
-  - x: 200
-    y: 300
-    entity_id: sensor.ac_power
-    label: "AC Unit"
-```
-
-### Mixed Static and Dynamic Values
-
-```yaml
-type: custom:heatmap-card
-background: /local/garden.jpg
-show_legend: true
-legend_unit: "%"
-points:
-  # Dynamic sensor values
-  - x: 100
-    y: 100
-    entity_id: sensor.soil_moisture_1
-    label: "Tomatoes"
-  - x: 200
-    y: 100
-    entity_id: sensor.soil_moisture_2
-    label: "Peppers"
-  # Static reference points
-  - x: 300
-    y: 200
-    value: 100
-    label: "Water Source"
-    weight: 0.5
-  - x: 50
-    y: 250
-    value: 0
-    label: "Dry Spot"
-    weight: 0.5
+  "0.0": "#d3d3d3" # Corrected from "0"
+  "0.3": "#ffff00"
+  "1.0": "#ff0000" # Corrected from "1"
 ```
 
 ## 🎨 Custom Color Gradients

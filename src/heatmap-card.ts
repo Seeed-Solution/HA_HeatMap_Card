@@ -57,7 +57,7 @@ export class HeatmapCard extends LitElement {
     return element as unknown as LovelaceCardEditor;
   }
 
-  public static getStubConfig(hass?: HomeAssistant, entities?: string[], entitiesFallback?: string[]): HeatmapCardConfig {
+  public static getStubConfig(_hass?: HomeAssistant, entities?: string[], entitiesFallback?: string[]): HeatmapCardConfig {
     // console.log('HeatmapCard getStubConfig called internally or by editor');
     const defaultConfig = ConfigValidator.getDefaultConfig();
     const exampleEntities = entitiesFallback || ['sensor.example_temperature', 'sensor.another_example'];
@@ -65,7 +65,7 @@ export class HeatmapCard extends LitElement {
 
     return {
       type: 'custom:heatmap-card',
-      background: '/local/floorplan.png', // Generic placeholder
+      background: '/hacsfiles/lovelace-heatmap-card/assets/firewood_fp.jpg', // Updated path for preview
       points: [
         {
           x: 100,

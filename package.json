@@ -1,6 +1,7 @@
 {
   "name": "heatmap-card",
   "version": "1.0.0",
+  "type": "module",
   "description": "A custom Home Assistant Lovelace card for displaying heatmaps",
   "main": "dist/heatmap-card.js",
   "scripts": {
