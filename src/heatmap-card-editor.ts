@@ -201,6 +201,42 @@ export class HeatmapCardEditor extends LitElement {
           `;
         })}
         <mwc-button outlined @click="${this._addPoint}">Add Point</mwc-button>
+
+        <h3>Display Options</h3>
+        <ha-formfield label="Show Legend">
+          <ha-switch
+            .checked="${this._config.show_legend || false}"
+            .configValue="${'show_legend'}"
+            @change="${this._valueChanged}"
+          ></ha-switch>
+        </ha-formfield>
+        <ha-textfield
+          label="Legend Unit (Optional)"
+          .value="${this._config.legend_unit || ''}"
+          .configValue="${'legend_unit'}"
+          @input="${this._valueChanged}"
+          helper="e.g., °C, %, W"
+          persistent-helper
+        ></ha-textfield>
+        <ha-formfield label="Show Point Labels">
+          <ha-switch
+            .checked="${this._config.show_labels || false}"
+            .configValue="${'show_labels'}"
+            @change="${this._valueChanged}"
+          ></ha-switch>
+        </ha-formfield>
+        <ha-textfield
+          label="Update Interval (seconds, Optional)"
+          type="number"
+          .value="${this._config.update_interval || ''}"
+          .configValue="${'update_interval'}"
+          @input="${this._valueChanged}"
+          min="5"
+          max="3600"
+          helper="Value between 5 and 3600"
+          persistent-helper
+        ></ha-textfield>
+
       </div>
     `;
   }
@@ -214,6 +250,7 @@ export class HeatmapCardEditor extends LitElement {
     ha-textfield,
     ha-select,
     ha-entity-picker,
+    ha-formfield,
     mwc-button {
       display: block; /* Ensure they take full width available in flex column */
       margin-bottom: 8px; /* Consistent spacing for form elements */
@@ -237,6 +274,9 @@ export class HeatmapCardEditor extends LitElement {
     }
     mwc-button[destructive] {
       --mdc-theme-primary: var(--error-color);
+    }
+    ha-formfield {
+      padding-bottom: 8px; /* Add some space below switches */
     }
   `;
 } 
