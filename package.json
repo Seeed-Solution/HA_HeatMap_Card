@@ -2,7 +2,7 @@
   "name": "heatmap-card",
   "version": "1.0.0",
   "description": "A custom Home Assistant Lovelace card for displaying heatmaps",
-  "main": "dist/HA_HeatMap_Card.js",
+  "main": "dist/heatmap-card.js",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -18,6 +18,10 @@
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Seeed-Solution/lovelace-heatmap-card.git"
+  },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",

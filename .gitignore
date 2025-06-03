@@ -2,9 +2,7 @@
 node_modules/
 
 # Build output
-dist/*
-!dist/HA_HeatMap_Card.js
-!dist/HA_HeatMap_Card.js.map
+dist/
 
 # IDE files
 .vscode/

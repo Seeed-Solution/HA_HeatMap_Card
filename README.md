@@ -34,13 +34,13 @@ A custom Lovelace card for Home Assistant that displays beautiful heatmaps overl
 
 ### Manual Installation
 
-1. Download `HA_HeatMap_Card.js` from the [latest release][releases]
-2. Copy it to `/config/www/HA_HeatMap_Card.js`
+1. Download `heatmap-card.js` from the [latest release][releases]
+2. Copy it to `/config/www/heatmap-card.js`
 3. Add the resource in your Lovelace configuration:
 
 ```yaml
 resources:
-  - url: /local/HA_HeatMap_Card.js
+  - url: /local/heatmap-card.js
     type: module
 ```
 
@@ -282,8 +282,8 @@ If you want to contribute to the development of this card or make your own custo
 
 1.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/Seeed-Solution/HA_HeatMap_Card.git
-    cd HA_HeatMap_Card
+    git clone https://github.com/Seeed-Solution/lovelace-heatmap-card.git
+    cd lovelace-heatmap-card
     ```
 
 2.  **Install Dependencies:**
@@ -293,7 +293,7 @@ If you want to contribute to the development of this card or make your own custo
     ```
 
 3.  **Build the Card:**
-    To build the `HA_HeatMap_Card.js` file from the source code, run:
+    To build the `heatmap-card.js` file from the source code, run:
     ```bash
     npm run build
     ```
@@ -304,7 +304,7 @@ If you want to contribute to the development of this card or make your own custo
     ```bash
     npm run dev
     ```
-    This is useful during development as it keeps the `dist/HA_HeatMap_Card.js` file up-to-date. You can then copy this file to your Home Assistant `www` directory to test your changes.
+    This is useful during development as it keeps the `dist/heatmap-card.js` file up-to-date. You can then copy this file to your Home Assistant `www` directory to test your changes.
 
 ## 🤝 Contributing
 
@@ -328,8 +328,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-[releases-shield]: https://img.shields.io/github/release/Seeed-Solution/HA_HeatMap_Card.svg?style=for-the-badge
-[releases]: https://github.com/Seeed-Solution/HA_HeatMap_Card/releases
-[license-shield]: https://img.shields.io/github/license/Seeed-Solution/HA_HeatMap_Card.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/Seeed-Solution/lovelace-heatmap-card.svg?style=for-the-badge
+[releases]: https://github.com/Seeed-Solution/lovelace-heatmap-card/releases
+[license-shield]: https://img.shields.io/github/license/Seeed-Solution/lovelace-heatmap-card.svg?style=for-the-badge
 [hacs]: https://github.com/hacs/integration
 [hacsbadge]: https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge 

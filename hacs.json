@@ -1,6 +1,4 @@
 {
   "name": "Heatmap Card",
-  "render_readme": true,
-  "filename": "HA_HeatMap_Card.js",
-  "content_in_root": true
+  "filename": "heatmap-card.js"
 } 
