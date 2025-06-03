@@ -51,51 +51,49 @@ export class HeatmapCard extends LitElement {
   private _canvasElement: HTMLCanvasElement | null = null; // Explicit reference to the canvas
 
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
-    const element = document.createElement('div');
-    element.innerHTML = 'This card is configured using YAML. Please use the YAML editor.';
+    // Dynamically import the editor class
+    await import('./heatmap-card-editor');
+    const element = document.createElement('heatmap-card-editor');
     return element as unknown as LovelaceCardEditor;
   }
 
-  public static getStubConfig(): Record<string, unknown> {
-    // console.log('HeatmapCard getStubConfig called');
+  public static getStubConfig(hass?: HomeAssistant, entities?: string[], entitiesFallback?: string[]): HeatmapCardConfig {
+    // console.log('HeatmapCard getStubConfig called internally or by editor');
+    const defaultConfig = ConfigValidator.getDefaultConfig();
+    const exampleEntities = entitiesFallback || ['sensor.example_temperature', 'sensor.another_example'];
+    const randomEntity = () => exampleEntities[Math.floor(Math.random() * exampleEntities.length)];
+
     return {
       type: 'custom:heatmap-card',
-      background: '/local/heatmap-card/map_test.png',
+      background: '/local/floorplan.png', // Generic placeholder
       points: [
         {
           x: 100,
           y: 150,
-          entity_id: 'sensor.your_temperature_sensor',
+          entity_id: entities && entities.length > 0 ? entities[0] : randomEntity(),
           label: 'Living Room (Example)',
+          weight: 1.0
         },
         {
           x: 200,
           y: 50,
           value: 65,
-          label: 'kitchen',
-          weight: 0.8,
-        },
-        {
-          x: 300,
-          y: 220,
-          value: 25,
-          label: 'Office (Example Static)',
+          label: 'Kitchen (Static Example)',
           weight: 0.8,
         },
       ],
-      radius: 50,
-      blur: 40,
-      opacity: 0.7,
-      auto_scale: true,
-      scale_margin: 10,
-      update_interval: 30,
-      show_legend: true,
-      legend_position: 'bottom',
-      legend_unit: '',
-      show_labels: true,
-      error_message: 'Error loading heatmap data.',
-      gradient: ConfigValidator.getDefaultConfig().gradient,
-    };
+      radius: defaultConfig.radius,
+      blur: defaultConfig.blur,
+      opacity: defaultConfig.opacity,
+      auto_scale: defaultConfig.auto_scale,
+      scale_margin: defaultConfig.scale_margin,
+      update_interval: defaultConfig.update_interval,
+      show_legend: defaultConfig.show_legend,
+      legend_unit: defaultConfig.legend_unit,
+      show_labels: defaultConfig.show_labels,
+      gradient: defaultConfig.gradient,
+      error_message: 'Error loading heatmap data.', // Default error message
+    } as HeatmapCardConfig; // Type assertion
   }
 
   static get styles(): CSSResultGroup {
@@ -215,7 +213,7 @@ export class HeatmapCard extends LitElement {
         padding: 8px;
         font-size: 12px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        z-index: 20;
+        z-index: 6; /* Reduced z-index */
         display: flex;
         align-items: flex-end;
       }
@@ -244,7 +242,7 @@ export class HeatmapCard extends LitElement {
         border-radius: 4px;
         font-size: 12px;
         pointer-events: none;
-        z-index: 1000;
+        z-index: 10; /* Reduced z-index */
         opacity: 0;
         transition: opacity 0.2s;
         white-space: nowrap;
@@ -264,29 +262,33 @@ export class HeatmapCard extends LitElement {
         pointer-events: none;
         transform: translate(-50%, -150%);
         white-space: nowrap;
-        z-index: 20; /* Ensure labels are above heatmap */
+        z-index: 7; /* Reduced z-index */
       }
     `;
   }
 
   public setConfig(config: HeatmapCardConfig): void {
-    // console.log('HeatmapCard setConfig called with:', JSON.parse(JSON.stringify(config))); 
+    // console.log('HeatmapCard setConfig called with:', JSON.parse(JSON.stringify(config)));
 
-    // Check if this is a minimal config (just type) or missing required fields
-    const isMinimalConfig = !config.background || !config.points || 
-                           (Object.keys(config).length <= 2); // type + maybe one other field
+    if (!config) {
+      // console.error('HeatmapCard: Config is null or undefined.');
+      this._error = 'Configuration is missing.';
+      this._config = { type: 'custom:heatmap-card', background:'', points:[] }; // Minimal valid config
+      this._loading = false;
+      return;
+    }
     
     let finalConfig: HeatmapCardConfig;
-    
-    if (isMinimalConfig) {
-      // console.log('HeatmapCard: Minimal config detected, using stub config as base');
-      // Use stub config as the base, but preserve any explicitly set values
-      const stubConfig = HeatmapCard.getStubConfig() as HeatmapCardConfig;
-      finalConfig = { ...stubConfig, ...config };
+
+    // Check if the provided config is minimal (e.g., only type, background, points)
+    // This often happens when a card is first added via UI before full configuration
+    if (Object.keys(config).length <= 3 && config.type && config.background !== undefined && config.points !== undefined) {
+        // console.log('HeatmapCard: Minimal config detected, using stub config as base');
+        // Use stub config as the base, but preserve any explicitly set values
+        const stubConfig = HeatmapCard.getStubConfig(this.hass, this._entities.size > 0 ? Array.from(this._entities) : undefined, undefined) as HeatmapCardConfig;
+        finalConfig = { ...stubConfig, ...config }; 
     } else {
-      // Normal config with required fields present
-      const defaults = ConfigValidator.getDefaultConfig();
-      finalConfig = { ...defaults, ...config } as HeatmapCardConfig;
+        finalConfig = { ...ConfigValidator.getDefaultConfig(), ...config };
     }
     
     this._config = finalConfig;
