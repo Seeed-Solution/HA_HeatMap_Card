@@ -59,39 +59,78 @@ export class HeatmapCard extends LitElement {
 
   public static getStubConfig(_hass?: HomeAssistant, entities?: string[], entitiesFallback?: string[]): HeatmapCardConfig {
     // console.log('HeatmapCard getStubConfig called internally or by editor');
-    const defaultConfig = ConfigValidator.getDefaultConfig();
+    // const defaultConfig = ConfigValidator.getDefaultConfig(); // Not strictly needed if all values are set explicitly below
     const exampleEntities = entitiesFallback || ['sensor.example_temperature', 'sensor.another_example'];
     const randomEntity = () => exampleEntities[Math.floor(Math.random() * exampleEntities.length)];
 
     return {
       type: 'custom:heatmap-card',
-      background: '/hacsfiles/lovelace-heatmap-card/assets/firewood_fp.jpg', // Updated path for preview
+      background: '/local/community/lovelace-heatmap-card/firewood_fp.jpg', // Updated path for preview
       points: [
         {
-          x: 100,
-          y: 150,
+          x: 220,
+          y: 100,
           entity_id: entities && entities.length > 0 ? entities[0] : randomEntity(),
-          label: 'Living Room (Example)',
-          weight: 1.0
+          label: 'Communication',
+          weight: 1.0 // Defaulting weight if not specified in example for this point
         },
         {
-          x: 200,
-          y: 50,
-          value: 65,
-          label: 'Kitchen (Static Example)',
+          x: 300,
+          y: 250,
+          value: 8,
+          label: 'Meeting',
+          weight: 0.8,
+        },
+        {
+          x: 300,
+          y: 180,
+          value: 15,
+          label: 'Office',
+          weight: 0.8,
+        },
+        {
+          x: 120,
+          y: 140,
+          value: 5,
+          label: 'WorkingArea1',
+          weight: 0.8,
+        },
+        {
+          x: 120,
+          y: 230,
+          value: 8,
+          label: 'WorkingArea2',
+          weight: 0.8,
+        },
+        {
+          x: 220,
+          y: 160,
+          value: 15,
+          label: 'Exhibition',
+          weight: 0.8,
+        },
+        {
+          x: 220,
+          y: 260,
+          value: 20,
+          label: 'Entrance',
           weight: 0.8,
         },
       ],
-      radius: defaultConfig.radius,
-      blur: defaultConfig.blur,
-      opacity: defaultConfig.opacity,
-      auto_scale: defaultConfig.auto_scale,
-      scale_margin: defaultConfig.scale_margin,
-      update_interval: defaultConfig.update_interval,
-      show_legend: defaultConfig.show_legend,
-      legend_unit: defaultConfig.legend_unit,
-      show_labels: defaultConfig.show_labels,
-      gradient: defaultConfig.gradient,
+      radius: 40,
+      blur: 30,
+      opacity: 0.7,
+      auto_scale: true,
+      scale_margin: 10,
+      update_interval: 30,
+      show_legend: true,
+      legend_unit: "",
+      show_labels: true,
+      gradient: {
+        "0.0": "#d3d3d3",
+        "0.3": "#ffff00",
+        "1.0": "#ff0000"
+      },
       error_message: 'Error loading heatmap data.', // Default error message
     } as HeatmapCardConfig; // Type assertion
   }
