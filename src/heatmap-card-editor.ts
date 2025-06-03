@@ -113,6 +113,16 @@ export class HeatmapCardEditor extends LitElement {
     return html`
       <div class="card-config">
         <ha-textfield
+          label="Background Image Path (Required)"
+          .value="${this._config.background || ''}"
+          .configValue="${'background'}"
+          @input="${this._valueChanged}"
+          required
+          helper="e.g., /local/floorplan.png or /hacsfiles/your-card/image.jpg"
+          persistent-helper
+        ></ha-textfield>
+
+        <ha-textfield
           label="Radius (pixels) (Optional)"
           type="number"
           .value="${this._config.radius || ''}"
