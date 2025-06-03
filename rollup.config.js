@@ -8,7 +8,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
   input: 'src/heatmap-card.ts',
   output: {
-    file: 'dist/heatmap-card.js',
+    file: 'dist/HA_HeatMap_Card.js',
     format: 'es',
     sourcemap: !production
   },
