@@ -1,4 +1,6 @@
 {
   "name": "Heatmap Card",
-  "filename": "heatmap-card.js"
+  "filename": "heatmap-card.js",
+  "homeassistant": "2024.8",
+  "render_readme": true
 } 
