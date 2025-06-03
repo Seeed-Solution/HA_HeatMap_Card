@@ -542,13 +542,21 @@ export class HeatmapCard extends LitElement {
   }
 
   private _createGradientString(): string {
-    const gradient = this._config.gradient || ConfigValidator.getDefaultConfig().gradient || {};
-    const positions = Object.keys(gradient)
-      .map(p => parseFloat(p))
-      .sort((a, b) => a - b);
+    const gradientConfig = this._config.gradient || ConfigValidator.getDefaultConfig().gradient || {};
+    // Cast to Record<string, string> to satisfy TypeScript when using string keys from Object.keys()
+    const gradient = gradientConfig as Record<string, string>; 
 
-    return positions
-      .map(pos => `${gradient[pos]} ${pos * 100}%`)
+    const stringPositions = Object.keys(gradient); // These are string keys e.g., "0.0", "0.5" or "0", "1"
+
+    // Sort the string positions based on their numeric values
+    stringPositions.sort((a, b) => parseFloat(a) - parseFloat(b));
+
+    return stringPositions
+      .map(strPos => {
+        const color = gradient[strPos];
+        const percentage = parseFloat(strPos) * 100;
+        return `${color} ${percentage}%`;
+      })
       .join(', ');
   }
 
