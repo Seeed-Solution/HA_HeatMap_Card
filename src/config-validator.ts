@@ -22,12 +22,12 @@ export class ConfigValidator {
     }
 
     // 验证数值范围
-    if (config.radius !== undefined && (config.radius < 10 || config.radius > 100)) {
-      errors.push('Radius must be between 10 and 100');
+    if (config.radius !== undefined && config.radius < 1) {
+      errors.push('Radius must be at least 1');
     }
 
-    if (config.blur !== undefined && (config.blur < 0 || config.blur > 50)) {
-      errors.push('Blur must be between 0 and 50 pixels');
+    if (config.blur !== undefined && config.blur < 0) {
+      errors.push('Blur must be at least 0 pixels');
     }
 
     if (config.opacity !== undefined && (config.opacity < 0 || config.opacity > 1)) {

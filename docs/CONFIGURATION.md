@@ -37,8 +37,8 @@ width: 800                          # Width in pixels (auto if not set)
 height: 600                         # Height in pixels (auto if not set)
 
 # Optional - Heatmap appearance
-radius: 40                          # Heat point radius 10-100 (default: 40)
-blur: 15                            # Additional blur radius in pixels 0-50 (default: 15)
+radius: 40                          # Heat point radius (min: 1, default: 40)
+blur: 15                            # Additional blur radius in pixels (min: 0, default: 15)
 opacity: 0.6                        # Heatmap opacity 0-1 (default: 0.6)
 
 # Optional - Value scaling

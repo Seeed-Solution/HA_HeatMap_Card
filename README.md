@@ -81,8 +81,8 @@ points:
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| `radius` | number | 40 | Heat point radius (10-100) |
-| `blur` | number | 15 | Additional blur radius in pixels (0-50) |
+| `radius` | number | 40 | Heat point radius (min: 1) |
+| `blur` | number | 15 | Additional blur radius in pixels (min: 0) |
 | `opacity` | number | 0.6 | Heatmap opacity (0-1) |
 | `gradient` | object | Blue→Green→Red | Color gradient configuration |
 
@@ -275,6 +275,36 @@ To find the correct x,y coordinates for your points:
 - Check browser console for errors
 - Verify at least one point has a valid value
 - Try increasing radius or opacity
+
+## 🛠️ Development Setup
+
+If you want to contribute to the development of this card or make your own customizations, follow these steps:
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/yourusername/heatmap-card.git
+    cd heatmap-card
+    ```
+
+2.  **Install Dependencies:**
+    This project uses [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/). Make sure you have them installed. Then, install the project dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  **Build the Card:**
+    To build the `heatmap-card.js` file from the source code, run:
+    ```bash
+    npm run build
+    ```
+    This will compile the TypeScript code and bundle it into the `dist/` directory.
+
+4.  **Development Workflow (Watch for changes):**
+    To automatically rebuild the card whenever you make changes to the source files in `src/`, use:
+    ```bash
+    npm run dev
+    ```
+    This is useful during development as it keeps the `dist/heatmap-card.js` file up-to-date. You can then copy this file to your Home Assistant `www` directory to test your changes.
 
 ## 🤝 Contributing
 

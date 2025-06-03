@@ -84,7 +84,7 @@ export class HeatmapCard extends LitElement {
         },
       ],
       radius: 50,
-      blur: 15,
+      blur: 40,
       opacity: 0.7,
       auto_scale: true,
       scale_margin: 10,
@@ -258,7 +258,7 @@ export class HeatmapCard extends LitElement {
         position: absolute;
         font-size: 11px;
         color: var(--primary-text-color);
-        background: rgba(255, 255, 255, 0.8);
+        background: transparent;
         padding: 2px 4px;
         border-radius: 2px;
         pointer-events: none;
