@@ -1,6 +1,6 @@
 {
   "name": "Heatmap Card",
   "render_readme": true,
-  "filename": "lovelace-heatmap-card.js",
+  "filename": "heatmap-card.js",
   "content_in_root": true
 } 
