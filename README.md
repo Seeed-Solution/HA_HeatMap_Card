@@ -6,7 +6,7 @@ A custom Lovelace card for Home Assistant that displays beautiful heatmaps overl
 [![License][license-shield]](LICENSE)
 [![hacs][hacsbadge]][hacs]
 
-![Heatmap Card Example](docs/img/result_visualize.png)
+![Heatmap Card Example](assets/result_visualize.png)
 
 ## ✨ Features
 
